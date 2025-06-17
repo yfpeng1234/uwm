@@ -10,7 +10,7 @@ fi
 
 # UWM 
 PRETRAIN_CHECKPOINT_PATH="/gscratch/weirdlab/zchuning/video-action-learning/logdir/uwm/droid/benchmark/0/models.pt"
-python experiments/uwm/finetune.py dataset=droid exp_id=finetune_benchmark \
+python experiments/uwm/train.py --config-name finetune_uwm.yaml dataset=droid exp_id=finetune_benchmark \
   dataset.name=droid_$DATA_NAME \
   dataset.buffer_path=$BUFFER_PATH \
   pretrain_checkpoint_path=$PRETRAIN_CHECKPOINT_PATH
