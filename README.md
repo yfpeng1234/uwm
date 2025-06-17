@@ -23,61 +23,67 @@ Install the package via
 ```
 pip install -e .
 ``` 
-> Note: if you encounter issues using tensorflow-dataset with DROID dataset, consider installing tensorflow-dataset from [source](https://github.com/tensorflow/datasets).
+> Note: if you encounter issues using tensorflow-dataset with DROID, consider installing tensorflow-dataset from [source](https://github.com/tensorflow/datasets).
 
-## Robomimic Single-Task Experiments
+## Robomimic Experiments
 To run a Robomimic single-task experiment,
 1. Install the [Robomimic](https://github.com/ARISE-Initiative/robomimic) dataset.
-2. Update the `hdf5_path` and `buffer_path` fields in your config (e.g., `configs/dataset/robomimic_cap_ph.yaml`).
+2. Update `hdf5_path` and `buffer_path` in the config (e.g., `configs/dataset/robomimic_cap_ph.yaml`).
 3. Run:
 ```
 python experiments/uwm/train_robomimic.py --config_name train_uwm_robomimic.yaml dataset=robomimic_can_ph exp_id=singletask
 ```
 This command will generate a Zarr compressed buffer at the `buffer_path` specified in the config file.
 
-## LIBERO Pretraining / Finetuning Experiments
+## LIBERO Experiments
 The LIBERO experiments share most infrastructure with the Robomimic experiments. 
 
-* To pretrain a UWM on LIBERO-90,
-    1. Install the [LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO) dataset.
-    2. Update `hdf5_path` and `buffer_path` in `configs/dataset/libero_90.yaml`.
-    3. Run:
-    ```
-    python experiments/uwm/train_robomimic.py --config_name train_uwm_robomimic.yaml dataset=libero_90 exp_id=pretrain
-    ```
+### Pretraining
+To pretrain a UWM on LIBERO-90,
+1. Install the [LIBERO](https://github.com/Lifelong-Robot-Learning/LIBERO) dataset.
+2. Update `hdf5_path` and `buffer_path` in `configs/dataset/libero_90.yaml`.
+3. Run:
+```
+python experiments/uwm/train_robomimic.py --config_name train_uwm_robomimic.yaml dataset=libero_90 exp_id=pretrain
+```
 
-* To finetune a pretrained UWM on a downstream task (e.g., Book-Caddy),
-    1. Update `hdf5_path` and `buffer_path` in `configs/dataset/libero_book_caddy.yaml`.
-    2. Run:
-    ```
-    python experiments/uwm/train_robomimic.py --config-name finetune_uwm_robomimic.yaml dataset=libero_book_caddy exp_id=finetune pretrain_checkpoint_path="logdir/uwm/libero_90/pretrain/0/models.pt"
-    ```
+### Finetuning
+To finetune a pretrained UWM on a downstream LIBERO task (e.g., Book-Caddy),
+1. Update `hdf5_path` and `buffer_path` in `configs/dataset/libero_book_caddy.yaml`.
+2. Run:
+```
+python experiments/uwm/train_robomimic.py --config-name finetune_uwm_robomimic.yaml dataset=libero_book_caddy exp_id=finetune pretrain_checkpoint_path="logdir/uwm/libero_90/pretrain/0/models.pt"
+```
 
-## DROID Pretraining / Cotraining / Finetuning Experiments
-We provide shell scripts for DROID pretraining / cotraining / finetuning experiments in the `scripts` directory. Each script runs a dataset conversion pipeline to create a Zarr buffer for the corresponding DROID TFDS dataset and then train a model. 
+## DROID Experiments
+We provide shell scripts for DROID pretraining / cotraining / finetuning experiments in the `scripts` directory. Each script runs a dataset conversion pipeline to create a Zarr buffer for the corresponding DROID TFDS dataset and then launches training.
 
-* To launch a DROID pretraining experiment, 
-    1. Install the [DROID](https://droid-dataset.github.io/) dataset
-    2. Update `DATA_DIR` and `BUFFER_PATH` in `scripts/launch_droid_pretrain.sh`
-    3. Run:
-    ```
-    source scripts/launch_droid_pretrain.sh
-    ```
+### Pretraining
+To launch a DROID pretraining experiment, 
+1. Install the [DROID](https://droid-dataset.github.io/) dataset
+2. Update `DATA_DIR` and `BUFFER_PATH` in `scripts/launch_droid_pretrain.sh`
+3. Run:
+```
+source scripts/launch_droid_pretrain.sh
+```
 
-* To launch a video cotraining experiment,
-    1. Update `DATA_DIR`, `BUFFER_PATH`, and `VIDEO_PATH` in `scripts/launch_droid_cotrain.sh`
-    3. Run:
-    ```
-    source scripts/launch_droid_cotrain.sh
-    ```
+### Cotraining
+To launch a video cotraining experiment,
+1. Install the [DROID](https://droid-dataset.github.io/) dataset
+2. Update `DATA_DIR`, `ROBOT_BUFFER_PATH`, and `VIDEO_BUFFER_PATH` in `scripts/launch_droid_cotrain.sh`
+3. Run:
+```
+source scripts/launch_droid_cotrain.sh
+```
 
-* To fineune a pretrained model to a downstream task, 
-    1. Collect demonstrations using the DROID interface
-    2. Convert them into a TFDS dataset (via this [codebase](https://github.com/kpertsch/droid_dataset_builder))
-    3. Modify and run:
-    ```
-    source scripts/launch_droid_finetune.sh
-    ```
+### Finetuning
+To fineune a pretrained model to a downstream task, 
+1. Collect demonstrations using the DROID interface
+2. Convert them into a TFDS dataset (via this [pipeline](https://github.com/kpertsch/droid_dataset_builder))
+3. Modify and run:
+```
+source scripts/launch_droid_finetune.sh
+```
 
 We release the pretrained and cotrained DROID UWM checkpoints [here](https://drive.google.com/drive/folders/1M4AuVLMRpSwOf_YAp56bV9AqyZI9ul6g?usp=sharing). You can download and directly finetune from these checkpoints.
 
