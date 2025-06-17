@@ -23,6 +23,7 @@ Install requirements using
 ```
 pip install -r requirements
 ``` 
+Note: if you encounter issues using tensorflow-dataset with DROID dataset, consider installing tensorflow-dataset from [source](https://github.com/tensorflow/datasets).
 
 Add current directory to PYTHONPATH
 ```
