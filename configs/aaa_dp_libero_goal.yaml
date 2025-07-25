@@ -1,0 +1,9 @@
+defaults:
+  - dataset: libero_goal
+  - model: dp_multitask
+  - template_train_robomimic
+  - _self_
+
+batch_size: 128
+num_frames: 17
+use_language: True

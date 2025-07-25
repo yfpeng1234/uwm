@@ -1,0 +1,15 @@
+defaults:
+  - template_libero
+  - _self_
+
+name: libero_goal
+hdf5_path_globs: /home/ypengbx/uwm/data/libero_goal/*.hdf5
+buffer_path: /home/ypengbx/uwm/data/libero_goal/buffer.zarr
+
+shape_meta:
+  obs:
+    agentview_rgb: &camera_meta
+      shape: [128, 128, 3]
+      type: rgb
+  action:
+    shape: [7] # pos + quarternion + gripper

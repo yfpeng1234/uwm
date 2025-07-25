@@ -35,3 +35,6 @@ MANIFEST
 logdir/
 wandb/
 logs/
+
+data/
+run/

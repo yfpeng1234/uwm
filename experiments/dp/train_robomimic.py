@@ -149,10 +149,10 @@ def train(rank, world_size, config):
                 wandb.log({f"train/{k}": v for k, v in info.items()})
 
             # --- Evaluate if needed ---
-            maybe_evaluate(config, step, model, val_loader, device)
+            # maybe_evaluate(config, step, model, val_loader, device)
 
             # ---Collect environment rollouts if needed ---
-            maybe_collect_rollout(config, step, model, device)
+            # maybe_collect_rollout(config, step, model, device)
 
             # --- Save checkpoint if needed ---
             maybe_save_checkpoint(config, step, model, optimizer, scheduler, scaler)
